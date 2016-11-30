@@ -24,17 +24,23 @@ module.exports.loop = function () {
 	var allJanitors = _.sum(Game.creeps, (x) => x.memory.type == 'Janitor');
 	var allBuilders = _.sum(Game.creeps, (x) => x.memory.type == 'Builder');
 	var allDefenders = _.sum(Game.creeps, (x) => x.memory.type == 'Defender');
-console.log(allHarvesters, allJanitors, allBuilders, allDefenders)
+
+
+
+ console.log(allHarvesters, allJanitors, allBuilders, allDefenders)
+
 	if (allHarvesters < 4) {
-		Game.spawns.Spawn1.createCreep([MOVE, CARRY, WORK, WORK], undefined, { type: 'Harvester'});
+		console.log(Game.spawns.Spawn1.createCustomCreep('Harvester', Game.spawns.Spawn1.room.energyCapacityAvailable));
 	} else if (allJanitors < 2) {
-		Game.spawns.Spawn1.createCreep([MOVE, MOVE, CARRY, CARRY, WORK], undefined, { type: 'Janitor'});
-	} else if (allDefenders < 2) {
-		Game.spawns.Spawn1.createCreep([MOVE, ATTACK, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE], undefined, { type: 'Defender'});
+		if (!isNaN(parseInt(Game.spawns.Spawn1.createCreep([MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, WORK, WORK, WORK], undefined, { type: 'Janitor'})))) {
+			Game.spawns.Spawn1.createCreep([MOVE, MOVE, CARRY, CARRY, WORK], undefined, { type: 'Janitor'});
+		}
 	} else if (allBuilders < 6) {
 		if (!isNaN(parseInt(Game.spawns.Spawn1.createCreep([MOVE, CARRY, WORK, MOVE, CARRY, WORK], undefined, { type: 'Builder'})))) {
 			Game.spawns.Spawn1.createCreep([MOVE, CARRY, WORK], undefined, { type: 'Builder'});
 		}
+	} else if (allDefenders < 2) {
+		Game.spawns.Spawn1.createCreep([MOVE, ATTACK, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE], undefined, { type: 'Defender'});
 	}
 
 	for (let name in Game.creeps) {
