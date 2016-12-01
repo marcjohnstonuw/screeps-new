@@ -27,13 +27,23 @@ var roleBuilder = {
 			}
 		} else {
 			var container = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'container');
-			if (_.sum(container.store) > 0) {
-				if (creep.withdraw(container, RESOURCE_ENERGY)) {
-					creep.moveTo(container);
-					return;
-				} else {
-					creep.memory.isFull = true;
+			if (container) {
+				if (_.sum(container.store) > 0) {
+					if (creep.withdraw(container, RESOURCE_ENERGY)) {
+						creep.moveTo(container);
+						return;
+					} else {
+						creep.memory.isFull = true;
+					}
 				}
+			} else {
+				var sources = creep.room.find(FIND_SOURCES);
+				if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+	                creep.moveTo(sources[0]);
+	            }
+	            if (_.sum(creep.carry) == creep.carryCapacity) {
+	            	creep.memory.isFull = true;
+	            }
 			}
 		}
  	}

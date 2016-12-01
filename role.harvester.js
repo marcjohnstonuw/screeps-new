@@ -9,7 +9,7 @@ var roleHarvester = {
 		if (creep.memory.isFull) {
 			var container = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'container');
 			var spawn = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'spawn');
-			if (_.sum(container.store) < container.storeCapacity) {
+			if (container && _.sum(container.store) < container.storeCapacity) {
 				if (creep.transfer(container, RESOURCE_ENERGY)) {
 					creep.moveTo(container);
 					return;

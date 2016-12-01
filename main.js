@@ -27,20 +27,23 @@ module.exports.loop = function () {
 
 
 
- console.log(allHarvesters, allJanitors, allBuilders, allDefenders)
+ // console.log(allHarvesters, allJanitors, allBuilders, allDefenders)
 
-	if (allHarvesters < 4) {
-		console.log(Game.spawns.Spawn1.createCustomCreep('Harvester', Game.spawns.Spawn1.room.energyCapacityAvailable));
-	} else if (allJanitors < 2) {
-		if (!isNaN(parseInt(Game.spawns.Spawn1.createCreep([MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, WORK, WORK, WORK], undefined, { type: 'Janitor'})))) {
-			Game.spawns.Spawn1.createCreep([MOVE, MOVE, CARRY, CARRY, WORK], undefined, { type: 'Janitor'});
-		}
+ 	var energyAvailable = Game.spawns.Spawn1.room.energyAvailable;
+
+	if (allHarvesters < 1) {
+		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable);
+	} else if (allBuilders < 1) {
+		Game.spawns.Spawn1.createCustomCreep('Builder', energyAvailable);
+	}
+	else if (allHarvesters < 4) {
+		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable);
 	} else if (allBuilders < 6) {
-		if (!isNaN(parseInt(Game.spawns.Spawn1.createCreep([MOVE, CARRY, WORK, MOVE, CARRY, WORK], undefined, { type: 'Builder'})))) {
-			Game.spawns.Spawn1.createCreep([MOVE, CARRY, WORK], undefined, { type: 'Builder'});
-		}
+		Game.spawns.Spawn1.createCustomCreep('Builder', energyAvailable);
+	} else if (allJanitors < 2) {
+		Game.spawns.Spawn1.createCustomCreep('Janitor', energyAvailable);
 	} else if (allDefenders < 2) {
-		Game.spawns.Spawn1.createCreep([MOVE, ATTACK, ATTACK, MOVE, ATTACK, MOVE, ATTACK, MOVE], undefined, { type: 'Defender'});
+		Game.spawns.Spawn1.createCustomCreep('Defender', energyAvailable);
 	}
 
 	for (let name in Game.creeps) {
