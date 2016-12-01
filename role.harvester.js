@@ -27,9 +27,12 @@ var roleHarvester = {
 				creep.memory.isFull = false;
 			}
 		} else { //fill
-			var sources = creep.room.find(FIND_SOURCES);
-			if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[0]);
+			var sources = _.find(creep.room.find(FIND_SOURCES), function (source) { 
+				// console.log(source.id, creep.memory.sourceID);
+				return source.id == creep.memory.sourceID
+			});
+			if(creep.harvest(sources) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(sources);
             }
             if (_.sum(creep.carry) == creep.carryCapacity) {
             	creep.memory.isFull = true;

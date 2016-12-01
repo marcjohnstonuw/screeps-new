@@ -35,8 +35,7 @@ module.exports.loop = function () {
 		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable);
 	} else if (allBuilders < 1) {
 		Game.spawns.Spawn1.createCustomCreep('Builder', energyAvailable);
-	}
-	else if (allHarvesters < 4) {
+	} else if (allHarvesters < 4) {
 		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable);
 	} else if (allBuilders < 6) {
 		Game.spawns.Spawn1.createCustomCreep('Builder', energyAvailable);
@@ -44,6 +43,8 @@ module.exports.loop = function () {
 		Game.spawns.Spawn1.createCustomCreep('Janitor', energyAvailable);
 	} else if (allDefenders < 2) {
 		Game.spawns.Spawn1.createCustomCreep('Defender', energyAvailable);
+	} else if (allHarvesters < 7) {
+		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable);
 	}
 
 	for (let name in Game.creeps) {
