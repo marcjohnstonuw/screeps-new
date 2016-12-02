@@ -7,7 +7,8 @@ var c = require('common');
 var roleHarvester = {
 	run: function (creep) {
 		if (creep.memory.isFull) {
-			var container = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'container');
+			var container = creep.pos.findClosestByPath(_.filter(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'container'));
+			//_.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'container');
 			var spawn = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'spawn');
 			if (container && _.sum(container.store) < container.storeCapacity) {
 				if (creep.transfer(container, RESOURCE_ENERGY)) {

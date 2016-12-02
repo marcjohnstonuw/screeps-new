@@ -9,6 +9,7 @@ var roleHarvester = require('role.harvester');
 var roleJanitor = require('role.janitor');
 var roleBuilder = require('role.builder');
 var roleDefender = require('role.defender');
+var roleCourier = require('role.courier');
 
 var roomsData = require('rooms');
 
@@ -24,6 +25,7 @@ module.exports.loop = function () {
 	var allJanitors = _.sum(Game.creeps, (x) => x.memory.type == 'Janitor');
 	var allBuilders = _.sum(Game.creeps, (x) => x.memory.type == 'Builder');
 	var allDefenders = _.sum(Game.creeps, (x) => x.memory.type == 'Defender');
+	var allCouriers = _.sum(Game.creeps, (x) => x.memory.type == 'Courier');
 
 
 
@@ -31,7 +33,9 @@ module.exports.loop = function () {
 
  	var energyAvailable = Game.spawns.Spawn1.room.energyAvailable;
 
+	console.log(allHarvesters)
 	if (allHarvesters < 1) {
+		console.log('spawning')
 		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable);
 	} else if (allBuilders < 1) {
 		Game.spawns.Spawn1.createCustomCreep('Builder', energyAvailable);
@@ -39,9 +43,11 @@ module.exports.loop = function () {
 		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable);
 	} else if (allBuilders < 6) {
 		Game.spawns.Spawn1.createCustomCreep('Builder', energyAvailable);
-	} else if (allJanitors < 2) {
+	} else if (allCouriers < 1) {
+		Game.spawns.Spawn1.createCustomCreep('Courier', energyAvailable);
+	} else if (allJanitors < 3) {
 		Game.spawns.Spawn1.createCustomCreep('Janitor', energyAvailable);
-	} else if (allDefenders < 2) {
+	} else if (allDefenders < 3) {
 		Game.spawns.Spawn1.createCustomCreep('Defender', energyAvailable);
 	} else if (allHarvesters < 7) {
 		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable);
@@ -59,6 +65,9 @@ module.exports.loop = function () {
 		}
 		if (Game.creeps[name].memory.type === 'Defender') {
 			roleDefender.run(Game.creeps[name]);
+		}
+		if (Game.creeps[name].memory.type === 'Courier') {
+			roleCourier.run(Game.creeps[name]);
 		}
 	}
 };

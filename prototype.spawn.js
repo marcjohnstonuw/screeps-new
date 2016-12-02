@@ -32,8 +32,12 @@ module.exports = function () {
 				partSet = [MOVE, CARRY, WORK];
 				break;
 			case 'Janitor':
-				energyPerPart = 200;
-				partSet = [MOVE, CARRY, WORK];
+				energyPerPart = 300;
+				partSet = [MOVE, MOVE, CARRY, CARRY, WORK];
+				break;
+			case 'Courier':
+				energyPerPart = 100;
+				partSet = [MOVE, CARRY];
 				break;
 			case 'Defender':
 				energyPerPart = 130;

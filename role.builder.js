@@ -27,6 +27,12 @@ var roleBuilder = {
 			}
 		} else {
 			var container = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'container');
+			/*_.first(_.sortByOrder(creep.room.find(FIND_STRUCTURES), (x) => {
+				return (x.structureType === 'container' || x.structuretype === 'storage') && _.sum(x.store) > 100;
+			}), function (x) {
+				return _.sum(x.store);
+			}, 'asc')*/
+			//
 			if (container) {
 				if (_.sum(container.store) > 0) {
 					if (creep.withdraw(container, RESOURCE_ENERGY)) {

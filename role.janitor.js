@@ -8,11 +8,11 @@ var roleBuilder = require('role.builder');
 var roleJanitor = {
 	run: function (creep) {
 		if (creep.memory.isFull) {
-			var repairTarget = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType !== 'constructedWall' && x.hits < x.hitsMax);
+			var repairTarget = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType !== 'constructedWall' && x.hits < x.hitsMax && x.hits < 300000);
 			var tower = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'tower' && x.energy < x.energyCapacity);
 			var spawn = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'spawn' && x.energy < x.energyCapacity);
 			var extension = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'extension' && x.energy < x.energyCapacity);
-			var wallTarget = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'constructedWall' && x.hits < x.hitsMax);
+			var wallTarget = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'constructedWall' && x.hits < 1000000/*x.hitsMax*/);
 			if (repairTarget) {
 				if (creep.repair(repairTarget)) {
 					creep.moveTo(repairTarget);
