@@ -26,13 +26,12 @@ var roleBuilder = {
 				creep.memory.isFull = false;
 			}
 		} else {
-			var container = _.find(creep.room.find(FIND_STRUCTURES), (x) => x.structureType === 'container');
-			/*_.first(_.sortByOrder(creep.room.find(FIND_STRUCTURES), (x) => {
-				return (x.structureType === 'container' || x.structuretype === 'storage') && _.sum(x.store) > 100;
+			var container = _.first(_.sortBy(_.filter(creep.room.find(FIND_STRUCTURES), (x) => {
+				return (x.structureType === 'storage') && _.sum(x.store) > 5000;
 			}), function (x) {
 				return _.sum(x.store);
-			}, 'asc')*/
-			//
+			}, 'asc'))
+
 			if (container) {
 				if (_.sum(container.store) > 0) {
 					if (creep.withdraw(container, RESOURCE_ENERGY)) {

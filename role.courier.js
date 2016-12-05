@@ -14,9 +14,8 @@ var roleCourier = {
 			}
 		} else {
 			var container = _.find(creep.room.find(FIND_STRUCTURES), (x) => {
-				return x.structureType === 'container' && _.sum(x.store) > 1000;
+				return x.structureType === 'container' && _.sum(x.store) > 1250;
 			}); 
-			console.log('container' + JSON.stringify(container))
 			if (container) {
 				if (creep.withdraw(container, RESOURCE_ENERGY)) {
 					creep.moveTo(container);

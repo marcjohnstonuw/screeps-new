@@ -11,12 +11,15 @@ function getSourceID(creep) {
 			id = value.id;
 		}
 	})
-	console.log('new spawn ID' + id)
 	return id;
 }
 
 module.exports = function () {
-	StructureSpawn.prototype.createCustomCreep = function (roleName, energy) {
+	StructureSpawn.prototype.createCustomCreep = function (roleName, energy, maxEnergy) {
+		var janitors = _.sum(Game.creeps, (x) => x.memory.type == 'Janitor');
+		if (janitors >= 2 && energy < (maxEnergy * 0.75)) {
+			return -999;
+		}
 		var numberOfParts, energyPerPart, partSet;
 		var memory = {
 			type: roleName
@@ -25,32 +28,41 @@ module.exports = function () {
 			case 'Harvester':
 				energyPerPart = 300;
 				partSet = [MOVE, CARRY, WORK, WORK];
+				numberOfParts = Math.min(3, Math.floor(energy / energyPerPart))
 				memory.sourceID = getSourceID();
 				break;
 			case 'Builder':
 				energyPerPart = 200;
 				partSet = [MOVE, CARRY, WORK];
+				numberOfParts = Math.min(5, Math.floor(energy / energyPerPart))
 				break;
 			case 'Janitor':
 				energyPerPart = 300;
 				partSet = [MOVE, MOVE, CARRY, CARRY, WORK];
+				numberOfParts = Math.min(4, Math.floor(energy / energyPerPart))
 				break;
 			case 'Courier':
 				energyPerPart = 100;
 				partSet = [MOVE, CARRY];
+				numberOfParts = Math.min(5, Math.floor(energy / energyPerPart))
 				break;
 			case 'Defender':
 				energyPerPart = 130;
 				partSet = [MOVE, ATTACK];
+				numberOfParts = Math.min(15, Math.floor(energy / energyPerPart))
+				break;
+			case 'Longharvester':
+			console.log('long')
+				energyPerPart = 250;
+				partSet = [MOVE, MOVE, WORK, CARRY];
+				numberOfParts = Math.min(4, Math.floor(energy / energyPerPart))
 				break;
 		}
-		var numberOfParts = Math.floor(energy / energyPerPart);
 		var parts = [];
 		for (let i = 0; i < numberOfParts; i++) {
 			parts = parts.concat(partSet);
 		}
 		var result = this.createCreep(parts, undefined, memory);
-		console.log('creep creation result' + result);
 		return result;
 	}
 }
