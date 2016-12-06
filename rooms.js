@@ -4,9 +4,19 @@ var roomW5N8 = Game.rooms.W5N8;
 
 module.exports = {
 	W5N8: {
+		spawns: {
+			"9fa9077331385d3": {
+				accessPoints: 3,
+				workToAssign: 8
+			},
+			"68050773313e4cb": {
+				accessPoints: 4,
+				workToAssign: 8
+			}
+		},
 		constructionSites: [
 			{type: STRUCTURE_CONTAINER, pos: roomW5N8.getPositionAt(14, 16)},
-			{type: STRUCTURE_CONTAINER, pos: roomW5N8.getPositionAt(38, 30)},
+			// {type: STRUCTURE_CONTAINER, pos: roomW5N8.getPositionAt(38, 30)},
 			{type: STRUCTURE_CONTAINER, pos: roomW5N8.getPositionAt(11, 22)},
 			{type: STRUCTURE_EXTENSION, pos: roomW5N8.getPositionAt(16, 20)},
 			{type: STRUCTURE_EXTENSION, pos: roomW5N8.getPositionAt(18, 20)},

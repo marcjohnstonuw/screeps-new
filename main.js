@@ -12,6 +12,7 @@ var roleDefender = require('role.defender');
 var roleCourier = require('role.courier');
 var roleLongharvester = require('role.longharvester');
 var tower = require('tower');
+var creepFactory = require('creepFactory');
 
 var roomsData = require('rooms');
 
@@ -23,47 +24,15 @@ module.exports.loop = function () {
 		}) 
 	}
 
-	var allHarvesters = _.sum(Game.creeps, (x) => x.memory.type == 'Harvester');
-	var allJanitors = _.sum(Game.creeps, (x) => x.memory.type == 'Janitor');
-	var allBuilders = _.sum(Game.creeps, (x) => x.memory.type == 'Builder');
-	var allDefenders = _.sum(Game.creeps, (x) => x.memory.type == 'Defender');
-	var allCouriers = _.sum(Game.creeps, (x) => x.memory.type == 'Courier');
-	var allLongharvesters = _.sum(Game.creeps, (x) => x.memory.type == 'Longharvester');
-
 	var towers = _.filter(Game.spawns.Spawn1.room.find(FIND_MY_STRUCTURES), (x) => {
 		return (x.structureType === 'tower');
 	});
 
  // console.log(allHarvesters, allJanitors, allBuilders, allDefenders, allCouriers, allLongharvesters)
 
- 	var energyAvailable = Game.spawns.Spawn1.room.energyAvailable;
- 	var energyCapacityAvailable = Game.spawns.Spawn1.room.energyCapacityAvailable;
 
-	if (allHarvesters < 1) {
-		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable, energyCapacityAvailable);
-	} else if (allJanitors < 1) {
-		Game.spawns.Spawn1.createCustomCreep('Janitor', energyAvailable, energyCapacityAvailable);
-	} else if (allBuilders < 1) {
-		Game.spawns.Spawn1.createCustomCreep('Builder', energyAvailable, energyCapacityAvailable);
-	} else if (allHarvesters < 3) {
-		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable, energyCapacityAvailable);
-	} else if (allJanitors < 2) {
-		Game.spawns.Spawn1.createCustomCreep('Janitor', energyAvailable, energyCapacityAvailable);
-	} else if (allBuilders < 3) {
-		Game.spawns.Spawn1.createCustomCreep('Builder', energyAvailable, energyCapacityAvailable);
-	} else if (allCouriers < 1) {
-		Game.spawns.Spawn1.createCustomCreep('Courier', energyAvailable, energyCapacityAvailable);
-	} else if (allJanitors < 2) {
-		Game.spawns.Spawn1.createCustomCreep('Janitor', energyAvailable, energyCapacityAvailable);
-	} else if (allDefenders < 2) {
-		Game.spawns.Spawn1.createCustomCreep('Defender', energyAvailable, energyCapacityAvailable);
-	} else if (allHarvesters < 6) {
-		Game.spawns.Spawn1.createCustomCreep('Harvester', energyAvailable, energyCapacityAvailable);
-	} else if (allDefenders < 3) {
-		Game.spawns.Spawn1.createCustomCreep('Defender', energyAvailable, energyCapacityAvailable);
-	} else if (allLongharvesters < 4) {
-		Game.spawns.Spawn1.createCustomCreep('Longharvester', energyAvailable, energyCapacityAvailable);
-	}
+	creepFactory.createCreeps(Game.spawns.Spawn1.room);
+
 
 	for (let name in Game.creeps) {
 		if (Game.creeps[name].memory.type === 'Harvester') {
